@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Details</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="./node_modules/cropperjs/dist/cropper.min.css"
+    />
+
+    <link rel="stylesheet" href="user.css" />
+  </head>
+
+  <script>
+    const userID = window.location.href.split("=")[1];
+
+    function loadOverlay() {
+      fetch("http://localhost:3001/status", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userID: userID }),
+      })
+        .then((response) => response.json())
+        .then((d) => {
+          if (d[0].name != "-") {
+            const viewButton = document.getElementById("view");
+            viewButton.classList.remove("disabled");
+
+            document.getElementById("inputField3").placeholder = d[0].name;
+
+            const img = document.getElementById("viewImage");
+            if (d.photo != "NA") {
+              const imageUrl = "data:image/png;base64," + d[0].photo;
+              img.src = imageUrl;
+            } else {
+              img.src = "https://static.thenounproject.com/png/4038155-200.png";
+            }
+
+            const s = document.getElementById("status");
+            console.log(d[0].status === 1);
+            if (d[0].status == 0 || d[0].status == 1) {
+              s.innerHTML = "No response yet";
+              console.log("here");
+            } else if (d[0].status == 2) {
+              s.innerHTML = "Accepted by Admin";
+              s.style.color = "green";
+            } else if (d[0].status == -1) {
+              s.innerHTML = "Rejected by Admin";
+              s.style.color = "red";
+            }
+          }
+        });
+    }
+
+    loadOverlay();
+
+    let cropper;
+
+    function handleImage(e) {
+      const inputField2 = document.getElementById("inputField2");
+      const originalImage = document.getElementById("originalImage");
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById("imgs").style.display = "flex";
+        const reader = new FileReader();
+
+        reader.onload = function (readerEvent) {
+          originalImage.src = readerEvent.target.result;
+          originalImage.style.width = "100px";
+          originalImage.style.height = "200px";
+          cropper.replace(readerEvent.target.result);
+        };
+
+        reader.readAsDataURL(file);
+      }
+      cropper = new Cropper(originalImage, {
+        aspectRatio: 1,
+        viewMode: 0,
+      });
+    }
+
+    function cropImage(e) {
+      e.preventDefault();
+      var croppedImage = cropper.getCroppedCanvas().toDataURL("image/png");
+      document.getElementById("croppedImage").src = croppedImage;
+      document.getElementById("viewImage").src = croppedImage;
+    }
+
+    function toggleOverlay() {
+      const overlay = document.getElementById("overlay");
+      const form = document.getElementById("form");
+      form.classList.toggle("blur");
+      overlay.classList.toggle("show");
+    }
+
+    function uploadImage(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("inputField1").value;
+      const croppedCanvas = cropper.getCroppedCanvas();
+      const photo = croppedCanvas.toDataURL("image/png");
+      const formData = new FormData();
+
+      formData.append("userID", userID);
+      formData.append("name", name);
+      formData.append("photo", photo);
+      console.log(formData);
+      fetch("http://localhost:3001/user_details", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.status == 400) {
+            alert(res.message);
+          } else if (res.status == 200) {
+            alert(res.message);
+            window.location.reload();
+          }
+        });
+      const viewButton = document.getElementById("view");
+      viewButton.classList.remove("disabled");
+    }
+  </script>
+
+  <body>
+    <div class="main">
+      <button
+        class="view btn btn-outline-primary disabled"
+        id="view"
+        onclick="toggleOverlay()"
+        ds
+      >
+        View
+      </button>
+      <form id="form">
+        <div class="ms-5 me-5 mb-4">
+          <label for="inputField1">Name</label>
+          <input type="text" class="form-control p-2" id="inputField1" />
+        </div>
+        <div class="ms-5 me-5 mb-4">
+          <label for="inputField2">Photo</label><br />
+          <input
+            type="file"
+            class="form-control p-2"
+            id="inputField2"
+            accept="image/*"
+            onchange="handleImage(event)"
+          /><br />
+          <div class="imgs" id="imgs" style="display: none">
+            <div id="cropperContainer" style="width: 50%">
+              <img
+                id="originalImage"
+                src=""
+                alt="original image"
+                style="width: 100%; height: 100%"
+              />
+            </div>
+            <img
+              id="croppedImage"
+              src=""
+              alt="cropped image"
+              style="width: 50%; height: 50%"
+            />
+          </div>
+        </div>
+        <button
+          class="btn btn-primary p-2 ms-5 me-5 mb-3"
+          onclick="cropImage(event)"
+        >
+          Crop
+        </button>
+        <button
+          class="btn btn-primary p-2 ms-5 me-5"
+          onclick="uploadImage(event)"
+        >
+          Upload
+        </button>
+      </form>
+
+      <div id="overlay" class="overlay">
+        <button
+          class="back-button btn btn-outline-primary"
+          onclick="toggleOverlay()"
+        >
+          Back
+        </button>
+        <div class="overlay-content mt-3">
+          <h3 class="text-center">View Details</h3>
+          <label for="inputField1 mb-1">Name</label>
+          <input
+            type="text"
+            class="form-control p-2 mb-3"
+            id="inputField3"
+            placeholder="Name varala"
+          />
+          <img
+            id="viewImage"
+            src=""
+            alt="view image"
+            style="width: 80%; height: 80%; margin-left: 10%"
+          />
+          <p
+            id="status"
+            class="text-center fs-5 p-2 mt-3"
+            style="width: 100%"
+          ></p>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.12/dist/cropper.min.js"></script>
+    </div>
+  </body>
+</html>

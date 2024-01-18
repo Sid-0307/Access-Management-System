@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create User</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+
+  <script>
+    function viewAllUser() {
+      console.log("hi");
+      window.location.href = "all_user.html";
+    }
+
+    function addUser(e) {
+      e.preventDefault();
+      const id = document.getElementById("inputField1").value;
+      const pass = document.getElementById("inputField2").value;
+      const data = { userID: id, password: pass };
+      fetch("http://localhost:3001/new_user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.status == 400) {
+            alert(res.message);
+          } else if (res.status == 200) {
+            alert(res.message);
+            window.open("user_login.html", "_blank");
+            window.location.reload();
+          }
+        });
+    }
+
+    function loadUsers() {
+      fetch("http://localhost:3001/get_users")
+        .then((response) => response.json())
+        .then((d) => {
+          const parent = document.getElementById("col2");
+          for (var i = 0; i < d.length; i++) {
+            const div = document.createElement("div");
+            div.classList.add("credentials");
+            const p1 = document.createElement("p");
+            const p2 = document.createElement("p");
+            p1.innerHTML = d[i].userID;
+            p2.innerHTML = d[i].name;
+            div.appendChild(p1);
+            div.appendChild(p2);
+            parent.appendChild(div);
+          }
+          if (d.length >= 1) {
+            const button = document.createElement("button");
+            button.innerHTML = "View";
+            button.classList.add("btn", "btn-primary", "view", "p-2", "fs-5");
+            button.addEventListener("click", viewAllUser);
+            parent.appendChild(button);
+          }
+        });
+    }
+
+    loadUsers();
+  </script>
+
+  <body>
+    <div class="contain">
+      <div class="col1">
+        <h1 class="m-4 text-center">Create User</h1>
+        <form>
+          <div class="ms-5 me-5 mb-4">
+            <label>User ID</label>
+            <input type="text" class="form-control p-2" id="inputField1" />
+          </div>
+          <div class="ms-5 me-5 mb-4">
+            <label>Password</label>
+            <input type="password" class="form-control p-2" id="inputField2" />
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary submit ms-5 me-5 mt-2 fs-5"
+            onclick="addUser(event)"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+      <div class="col2" id="col2">
+        <h1 class="m-4 text-center" id="viewUser">View User</h1>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+body {
+  overflow: hidden;
+}
+
+.upload {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+}
+.main {
+  height: 100vh;
+}
+.blur {
+  opacity: 0.5;
+}
+.view {
+  width: 8%;
+  padding: 0.5%;
+  font-size: 1.3rem;
+  float: right;
+  position: relative;
+  left: -75px;
+  margin-top: 1%;
+}
+
+.view:disabled {
+  cursor: not-allowed;
+}
+
+form {
+  display: flex;
+  height: 95vh;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 30%;
+}
+
+.imgs {
+  display: flex;
+  gap: 10px;
+}
+
+img {
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  display: none;
+  background-color: white;
+  width: 30%;
+  box-shadow: -2px 0px 5px rgb(55, 54, 54);
+}
+
+.show {
+  display: block;
+}
+
+.back-button {
+  width: 27%;
+  padding: 2%;
+  font-size: 1.3rem;
+  margin-top: 5%;
+  margin-left: 57%;
+}
+
+.overlay-content {
+  padding: 5%;
+}

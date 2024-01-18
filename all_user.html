@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <script>
+
+
+    function goBack(){
+      window.location.href="create_user.html"
+    }
+
+
+    function action(id,acc){
+      fetch("http://localhost:3001/action",{
+        method:"POST",
+        headers:{
+          "Content-type":"application/json",
+        },
+        body:JSON.stringify({userID:id,action:acc})
+      }).then(response=>response.json()).then(data=>{
+        window.location.reload();
+      })
+    }
+
+
+
+    fetch("http://localhost:3001/all_users").then(response=>response.json()).then(data=>{
+      data.forEach(d=>{
+        let flag=0;
+        const tr=document.createElement('tr');
+        const td1=document.createElement('td');
+        td1.innerHTML=d.userID;
+
+        const td2=document.createElement('td');
+        td2.innerHTML=d.name;
+
+        const td3=document.createElement('td');
+        const img=document.createElement('img')
+        if(d.photo!="NA"){
+            const imageUrl = "data:image/png;base64,"+d.photo;
+            img.src=imageUrl;
+        }
+        else{
+            flag=1;
+            img.src="https://static.thenounproject.com/png/4038155-200.png";          
+        }
+        img.alt="profile";
+        img.style.width = '150px'; 
+        td3.appendChild(img);
+
+
+        const td4=document.createElement('td');
+        if(d.status==1){
+          const button1=document.createElement('button');
+          button1.innerHTML="Accept";
+          button1.classList.add("btn","btn-outline-success","me-4");
+          button1.id="accept";
+          button1.addEventListener("click",(()=>action(d.userID,"accept")))
+
+
+          const button2=document.createElement('button');
+          button2.innerHTML="Reject";
+          button2.classList.add("btn","btn-outline-danger","me-4");
+          button2.id="reject";
+          button2.addEventListener("click",(()=>action(d.userID,"reject")))
+
+          td4.appendChild(button1);
+          td4.appendChild(button2);
+        } 
+
+          const button3=document.createElement('button');
+          button3.innerHTML="Delete";
+          button3.classList.add("btn","btn-outline-primary");
+          button3.id="Delete";
+          button3.addEventListener("click",(()=>action(d.userID,"delete")))
+
+          td4.appendChild(button3);
+        
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+          tr.appendChild(td3);
+          tr.appendChild(td4);
+
+          const parent = document.getElementById("table");
+          parent.appendChild(tr);
+      })
+    })
+  </script>
+
+  
+  <body>
+    <button class="btn btn-outline-primary ms-5 mt-5 fs-4" onclick="goBack()">
+      Back
+    </button>
+      <table class="table" id="table">        
+        <tr>
+          <th>User Id</th>
+          <th>Name</th>
+          <th>Photo</th>
+          <th>Action</th>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

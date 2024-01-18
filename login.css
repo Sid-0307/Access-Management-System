@@ -1,0 +1,35 @@
+body {
+  margin: 0px;
+  overflow: hidden;
+}
+.contain {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+.col1 {
+  width: 60%;
+  background-color: rgb(6, 6, 175);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.col2 {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo {
+  background-color: white;
+  padding: 30px;
+  width: 30%;
+  color: blue;
+  font-size: 2rem;
+}
+
+.submit {
+  width: 82%;
+}
