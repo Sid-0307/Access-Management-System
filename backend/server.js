@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 const MongoClient = require("mongodb").MongoClient;
 const port = 3001;
-const uri = `mongodb+srv://siddharthshankar03:Magilam304@cluster0.rgteyqh.mongodb.net/`;
+const uri = ``; //insert mongoDB url
 const client = new MongoClient(uri);
 
 app.post("/admin_login", (req, res) => {
