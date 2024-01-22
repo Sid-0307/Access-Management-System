@@ -21,7 +21,7 @@
 
 
     function action(id,acc){
-      fetch("http://localhost:3001/action",{
+      fetch("https://accessmanagementbackend.onrender.com/action",{
         method:"POST",
         headers:{
           "Content-type":"application/json",
@@ -32,7 +32,7 @@
       })
     }
 
-    fetch("http://localhost:3001/all_users").then(response=>response.json()).then(data=>{
+    fetch("https://accessmanagementbackend.onrender.com/all_users").then(response=>response.json()).then(data=>{
       data.forEach(d=>{
         let flag=0;
         const tr=document.createElement('tr');
