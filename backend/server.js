@@ -13,6 +13,11 @@ const port = 3001;
 const uri = process.env.MONGODB_URL;
 const client = new MongoClient(uri);
 
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ message: "Success" });
+});
+
 app.post("/admin_login", (req, res) => {
   client.connect();
   console.log("Connected", req.body);
