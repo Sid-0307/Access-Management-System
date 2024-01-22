@@ -17,16 +17,19 @@ git clone https://github.com/Sid-0307/Access-Management-System.git
 npm i
 ```
 
+
 Create /backend/.env file
 ```bash
 MONGODB_URL=
 ```
+
 
 Create database Authentication-App
 ```bash
 Create Admin and User Collection
 Hardcode Admin - username and password
 ```
+
 
 Run
 ```bash
