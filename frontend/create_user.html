@@ -24,7 +24,7 @@
       const id = document.getElementById("inputField1").value;
       const pass = document.getElementById("inputField2").value;
       const data = { userID: id, password: pass };
-      fetch("http://localhost:3001/new_user", {
+      fetch("https://accessmanagementbackend.onrender.com/new_user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@
     }
 
     function loadUsers() {
-      fetch("http://localhost:3001/get_users")
+      fetch("https://accessmanagementbackend.onrender.com/get_users")
         .then((response) => response.json())
         .then((d) => {
           const parent = document.getElementById("col2");
