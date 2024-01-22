@@ -127,11 +127,11 @@
             alert(res.message);
           } else if (res.status == 200) {
             alert(res.message);
+            const viewButton = document.getElementById("view");
+            viewButton.classList.remove("disabled");
             window.location.reload();
           }
         });
-      const viewButton = document.getElementById("view");
-      viewButton.classList.remove("disabled");
     }
   </script>
 
