@@ -22,7 +22,7 @@
     const userID = window.location.href.split("=")[1];
 
     function loadOverlay() {
-      fetch("http://localhost:3001/status", {
+      fetch("https://accessmanagementbackend.onrender.com/status", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -114,7 +114,7 @@
       formData.append("name", name);
       formData.append("photo", photo);
       console.log(formData);
-      fetch("http://localhost:3001/user_details", {
+      fetch("https://accessmanagementbackend.onrender.com/user_details", {
         method: "POST",
         body: formData,
       })
