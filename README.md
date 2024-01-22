@@ -22,6 +22,8 @@ Create /backend/.env file
 MONGODB_URL=
 ```
 
+Create collection 'Admin' and 'Users' in database 'Authentication-App'
+
 Run
 ```bash
 node /backend/server.js
