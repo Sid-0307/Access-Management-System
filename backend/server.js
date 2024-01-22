@@ -122,7 +122,7 @@ app.post("/action", async (req, res) => {
       { $set: { status: -1 } }
     );
   } else if (req.body.action == "delete") {
-    collection.deleteOne({ userID: req.body.userID });
+    result=await collection.deleteOne({ userID: req.body.userID });
   }
   console.log(result);
   res.send(result);
