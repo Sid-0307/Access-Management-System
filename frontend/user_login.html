@@ -18,7 +18,7 @@
       const user = document.getElementById("inputField1").value;
       const pass = document.getElementById("inputField2").value;
       const data = { userID: user, password: pass };
-      fetch("http://localhost:3001/user_login", {
+      fetch("https://accessmanagementbackend.onrender.com/user_login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
