@@ -50,7 +50,7 @@ Start live server at index.html
 
 ![Screenshot 2024-01-22 230437](https://github.com/Sid-0307/Access-Management-System/assets/110523312/15c5896b-40ab-46a7-beb7-49447b37facd)
 
-![Screenshot 2024-01-22 230449](https://github.com/Sid-0307/Access-Management-System/assets/110523312/819f7d9c-0f82-4ea9-b9b6-ab335e7c1051)
+![Screenshot 2024-01-22 230508](https://github.com/Sid-0307/Access-Management-System/assets/110523312/9142b011-d2b3-461d-877d-f960df82e3d9)
 
 ![Screenshot 2024-01-22 230523](https://github.com/Sid-0307/Access-Management-System/assets/110523312/a40f1a52-791d-4318-b3db-54cf58395ca8)
 
