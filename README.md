@@ -18,6 +18,7 @@ npm i
 ```
 
 
+
 Create /backend/.env file
 ```bash
 MONGODB_URL=
@@ -34,5 +35,5 @@ Hardcode Admin - username and password
 Run
 ```bash
 node /backend/server.js
-Open index.html in browser
+Start live server at index.html
 ```
