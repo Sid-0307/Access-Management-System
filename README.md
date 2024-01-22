@@ -22,7 +22,11 @@ Create /backend/.env file
 MONGODB_URL=
 ```
 
-Create collection 'Admin' and 'Users' in database 'Authentication-App'
+Create database Authentication-App
+```bash
+Create Admin and User Collection
+Hardcode Admin - username and password
+```
 
 Run
 ```bash
