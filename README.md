@@ -1,8 +1,9 @@
 ﻿# Access Management System
 
-A web application where administrators have control over user authentication - enabling them to manage access and credentials. 
-
-The system also includes an image cropping feature, allowing users to edit and adjust their profile pictures as part of their account management.
+A web application where 
+- admin has control over user authentication
+- admin can manage access and credentials
+- includes an image cropping feature for editing user profile pictures
 
 Hosted on - https://access-management-system.vercel.app/
 
