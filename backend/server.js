@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
@@ -9,7 +10,7 @@ app.use(bodyParser.json());
 
 const MongoClient = require("mongodb").MongoClient;
 const port = 3001;
-const uri = ``; //insert mongoDB url
+const uri = process.env.MONGODB_URL;
 const client = new MongoClient(uri);
 
 app.post("/admin_login", (req, res) => {
